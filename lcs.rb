@@ -26,8 +26,8 @@ def compute_lcs_table(string_x, string_y)
   end
   for i in 1..string_x.length
     for j in 1..string_y.length
-      if string_x[0..i] == string_y[0..j]
-        table[i][j] = (table[i - 1][j - 1]) + 1
+      if string_x[i] == string_y[j] # should be non-contiguous
+        table[i][j] = ((table[i - 1][j - 1]) + 1)
       elsif table[i][j - 1] >= table[i - 1][j]
         table[i][j] = table[i][j - 1]
       else
