@@ -33,8 +33,14 @@ def assemble_lcs(string_x, string_y, table, x_index, y_index)
   end
 end
 
-string_x = " CATCGA"
-string_y = " GTACCGTCA"
+# string_x = " CATCGA"
+# string_y = " GTACCGTCA"
+#
+# table = compute_lcs_table(string_x, string_y)
+# puts assemble_lcs(string_x, string_y, table, string_x.length - 1, string_y.length - 1)
+
+string_x = " " + IO.read('sequence_one.txt')
+string_y = " " + IO.read('sequence_two.txt')
 
 table = compute_lcs_table(string_x, string_y)
 puts assemble_lcs(string_x, string_y, table, string_x.length - 1, string_y.length - 1)
