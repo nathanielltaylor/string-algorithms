@@ -34,13 +34,25 @@ def compute_transform_tables(string_x, string_y, copy_c, replace_c, delete_c, in
   return [cost, op]
 end
 
+def assemble_transformation(op, i, j)
+  return "" if i == 0 && j == 0
+  if op[i][j].start_with?("copy") || op[i][j].start_with?("replace")
+    return assemble_transformation(op, i - 1, j - 1) + "\n" + op[i][j]
+  elsif op[i][j].start_with?("delete")
+    return assemble_transformation(op, i - 1, j) + "\n" + op[i][j]
+  else
+    return assemble_transformation(op, i, j - 1) + "\n" + op[i][j]
+  end
+end
+
 copy_c = (-1)
 replace_c = 1
 delete_c = insert_c = 2
-string_x = " ACAAGC"
-string_y = " CCGT"
+# Cost integer values are those described by Cormen for a DNA alignment procedure
+# string_x = " ACAAGC"
+# string_y = " CCGT"
+string_x = " " + IO.read('sequence_one.txt')
+string_y = " " + IO.read('sequence_two.txt')
 
 tables = compute_transform_tables(string_x, string_y, copy_c, replace_c, delete_c, insert_c)
-tables.each do |t|
-  puts t.hash
-end
+puts assemble_transformation(tables[1], string_x.length - 1, string_y.length - 1)
